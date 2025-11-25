@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta - RZ Produções</title>
+
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="/static/firebase.js"></script>
+
+    <!-- CSS ESPECÍFICO PARA CENTRALIZAR ESTA PÁGINA -->
+    <style>
+        /* Faz o corpo ocupar 100% da altura da tela */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #1a1a1a; /* Garante fundo preto */
+        }
+
+        /* Container Central que segura Menu + Conteúdo */
+        .wrapper-central {
+            flex: 1; /* Ocupa todo o espaço disponível */
+            display: flex;
+            align-items: center; /* Centraliza Verticalmente */
+            justify-content: center; /* Centraliza Horizontalmente */
+            padding-top: 80px; /* Espaço para não bater no header */
+            padding-bottom: 40px;
+        }
+
+        .conta-main {
+            display: flex;
+            width: 100%;
+            max-width: 900px; /* Limita a largura total para não esticar demais */
+            background-color: #111; /* Um fundo sutil para diferenciar do body */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(139, 0, 255, 0.1); /* Sombra Roxa sutil */
+            border: 1px solid #222;
+        }
+
+        /* Menu Lateral ajustado */
+        .menu-lateral {
+            background-color: #1a1a1a;
+            width: 250px;
+            padding: 30px 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #333;
+        }
+
+        .menu-lateral a {
+            padding: 15px 25px;
+            color: #ccc;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .menu-lateral a:hover, .menu-lateral a.active {
+            background-color: #252525;
+            color: var(--cor-primaria, #ff0066);
+            border-left: 4px solid var(--cor-primaria, #ff0066);
+        }
+
+        /* Conteúdo Principal */
+        .conteudo-principal {
+            flex: 1; /* Ocupa o resto do espaço */
+            padding: 40px;
+        }
+
+        .secao h2 {
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        /* Ajuste dos Dados Pessoais para ficarem bonitos */
+        .dados-linha {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .dados-linha span:first-child {
+            color: #888;
+        }
+
+        .dados-linha span:last-child {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .conta-main {
+                flex-direction: column;
+                margin: 20px;
+            }
+            .menu-lateral {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid #333;
+                padding: 10px;
+            }
+            .menu-lateral a {
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 4px solid transparent;
+                justify-content: center;
+            }
+            .menu-lateral a:hover, .menu-lateral a.active {
+                border-left: none;
+                border-bottom: 4px solid var(--cor-primaria, #ff0066);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Padrão -->
+    <header>
+        <div class="logo">
+            <a href="/">
+                <img src="/static/IMG_2751.jpg" alt="Logo RZ Produções">
+            </a>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/eventos">Eventos</a>
+        </nav>
+
+        <div class="acoes-header">
+            <a href="/login" class="btn-acesso">Acesse / Entrar</a>
+        </div>
+    </header>
+
+    <!-- Wrapper Centralizador -->
+    <div class="wrapper-central">
+        
+        <div class="conta-main">
+            
+            <!-- Menu Lateral -->
+            <nav class="menu-lateral">
+                <a href="#" class="active" onclick="mostrarTab('dados', this)">
+                    <i class="fas fa-user"></i> Meus Dados
+                </a>
+                <a href="#" onclick="mostrarTab('ingressos', this)">
+                    <i class="fas fa-ticket-alt"></i> Meus Ingressos
+                </a>
+                <a href="#" onclick="sairDaConta()" style="margin-top: auto; color: #ff4444;">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </a>
+            </nav>
+
+            <!-- Conteúdo Principal -->
+            <section class="conteudo-principal">
+
+                <!-- ABA: Dados Pessoais (Padrão) -->
+                <div id="tab-dados" class="secao">
+                    <h2>Meus Dados</h2>
+                    
+                    <div class="dados-linha">
+                        <span>Nome Completo:</span>
+                        <span id="perfil-nome">Carregando...</span>
+                    </div>
+                    
+                    <div class="dados-linha">
+                        <span>E-mail:</span>
+                        <span id="perfil-email">Carregando...</span>
+                    </div>
+
+                    <div class="dados-linha">
+                        <span>UID (ID Único):</span>
+                        <span id="perfil-uid" style="font-size: 12px; color: #555;">...</span>
+                    </div>
+                </div>
+
+                <!-- ABA: Ingressos -->
+                <div id="tab-ingressos" class="secao" style="display: none;">
+                    <h2>Meus Ingressos</h2>
+                    <div id="lista-ingressos">
+                        <p style="color: #888;">Carregando seus ingressos...</p>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts da Página -->
+    <script>
+        // Verifica se está logado e carrega dados
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                // Preencher Dados
+                document.getElementById("perfil-nome").innerText = user.displayName || "Usuário";
+                document.getElementById("perfil-email").innerText = user.email;
+                document.getElementById("perfil-uid").innerText = user.uid;
+
+                // Buscar Ingressos
+                carregarIngressos(user.uid);
+            } else {
+                window.location.href = "/login";
+            }
+        });
+
+        function carregarIngressos(uid) {
+            const lista = document.getElementById("lista-ingressos");
+            
+            db.collection("compras")
+                .where("uid_usuario", "==", uid)
+                .get()
+                .then((querySnapshot) => {
+                    lista.innerHTML = ""; 
+
+                    if (querySnapshot.empty) {
+                        lista.innerHTML = "<p>Nenhum ingresso encontrado.</p>";
+                        return;
+                    }
+
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        let dataCompra = data.data && data.data.toDate ? data.data.toDate().toLocaleDateString('pt-BR') : "Data desc.";
+
+                        lista.innerHTML += `
+                            <div style="background: #222; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #ff0066;">
+                                <h3 style="margin: 0 0 5px 0;">${data.evento}</h3>
+                                <p style="color: #ccc; margin: 0;">${data.quantidade}x Ingresso(s) • R$ ${data.valor},00</p>
+                                <small style="color: #666;">Comprado em: ${dataCompra}</small>
+                            </div>
+                        `;
+                    });
+                })
+                .catch((error) => {
+                    console.error("Erro:", error);
+                });
+        }
+
+        function sairDaConta() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "/";
+            });
+        }
+
+        function mostrarTab(tabId, elemento) {
+            // Esconde todas as seções
+            document.querySelectorAll('.secao').forEach(el => el.style.display = 'none');
+            // Mostra a selecionada
+            document.getElementById('tab-' + tabId).style.display = 'block';
+
+            // Atualiza classe active no menu
+            document.querySelectorAll('.menu-lateral a').forEach(el => el.classList.remove('active'));
+            if(elemento) elemento.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

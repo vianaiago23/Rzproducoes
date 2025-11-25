@@ -7,6 +7,10 @@ app = Flask(__name__)
 def homepage():
     return render_template("index.html")
 
+@app.route("/conta")
+def conta():
+    return render_template("conta.html")
+
 # Rota da Eventos
 @app.route("/eventos")
 def eventos():

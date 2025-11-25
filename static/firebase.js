@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnConta = document.createElement("button");
     btnConta.innerText = "Minha Conta";
     btnConta.className = "btn-acesso";
-    btnConta.onclick = () => window.location.href = "conta.html";
+    btnConta.onclick = () => window.location.href = "/conta";
 
     const btnSair = document.createElement("button");
     btnSair.innerText = "Sair";

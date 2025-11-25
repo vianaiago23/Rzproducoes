@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finalizar Compra - FestaClub</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
     
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script> <script src="/static/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="/static/firebase.js"></script>
 </head>
 <body>
 
@@ -31,81 +34,160 @@
 
     <main>
         <section class="secao-contato" style="padding-top: 120px;">
-            <h1>Resumo do Pedido</h1>
-            <p>Você está a um passo de garantir sua noite!</p>
-
+            <h1>Finalizar Pagamento</h1>
+            
             <div class="contato-grid">
-                <div class="contato-info" style="width: 100%; max-width: 500px; text-align: left;">
+                
+                <!-- ESTADO 1: Resumo do Pedido -->
+                <div id="card-resumo" class="contato-info" style="width: 100%; max-width: 500px; text-align: left;">
                     <h2 style="color: var(--cor-secundaria);">Festa 0800 - Edição Verão</h2>
-                    <p><i class="fas fa-calendar"></i> 01 de Janeiro</p>
                     <p><i class="fas fa-map-marker-alt"></i> Blue Center, Rio de Janeiro</p>
                     <hr style="border-color: #333; margin: 15px 0;">
                     
-                    <label for="qtd" style="display:block; margin-bottom: 5px;">Quantidade de Ingressos:</label>
+                    <label style="display:block; margin-bottom: 5px;">Quantidade:</label>
                     <select id="qtd" style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #333; border-radius: 5px;">
                         <option value="1">1 Ingresso (R$ 50,00)</option>
                         <option value="2">2 Ingressos (R$ 100,00)</option>
                         <option value="3">3 Ingressos (R$ 150,00)</option>
-                        <option value="4">4 Ingressos (R$ 200,00)</option>
                     </select>
 
                     <h3 id="totalDisplay" style="margin-top: 20px; font-size: 24px;">Total: R$ 50,00</h3>
 
-                    <button onclick="processarCompra()" class="btn-compre-agora" style="width: 100%; margin-top: 20px;">
-                        CONFIRMAR PAGAMENTO
+                    <!-- Botão que gera o PIX -->
+                    <button id="btn-pagar" onclick="gerarPix()" class="btn-compre-agora" style="width: 100%; margin-top: 20px;">
+                        PAGAR COM PIX
                     </button>
                     
-                    <p id="msgErro" style="color: red; margin-top: 10px; text-align: center;"></p>
+                    <p id="msgErro" style="color: red; margin-top: 10px; text-align: center; display: none;"></p>
+                    <p id="loading" style="color: yellow; margin-top: 10px; text-align: center; display: none;">Gerando QR Code...</p>
                 </div>
+
+                <!-- ESTADO 2: Área do PIX (Escondido inicialmente) -->
+                <div id="card-pix" class="contato-info" style="width: 100%; max-width: 500px; text-align: center; display: none;">
+                    <h2 style="color: #00bd20;">Pagamento Gerado!</h2>
+                    <p>Escaneie o QR Code abaixo no app do seu banco:</p>
+                    
+                    <!-- Imagem do QR Code que vem do Mercado Pago -->
+                    <img id="img-qrcode" src="" alt="QR Code PIX" style="width: 250px; margin: 20px auto; border-radius: 10px;">
+                    
+                    <textarea id="cola-pix" rows="3" style="width: 100%; font-size: 12px; color: #000;" readonly></textarea>
+                    <button onclick="copiarPix()" style="background: #333; color: white; border: none; padding: 5px 10px; margin-bottom: 20px; cursor: pointer;">Copiar Código</button>
+
+                    <hr style="border-color: #333;">
+                    
+                    <p style="font-size: 14px; color: #ccc;">Após pagar no banco, clique abaixo para liberar seu ingresso.</p>
+                    <button onclick="confirmarPagamento()" class="btn-compre-agora" style="width: 100%; background-color: #00bd20;">
+                        JÁ FIZ O PAGAMENTO
+                    </button>
+                </div>
+
             </div>
         </section>
     </main>
 
     <script>
-        // Atualiza o preço visualmente quando muda a quantidade
+        // Variáveis Globais
         const selectQtd = document.getElementById('qtd');
         const totalDisplay = document.getElementById('totalDisplay');
         const precoUnitario = 50;
+        let dadosCompra = {}; // Para guardar temporariamente
 
+        // Atualiza Preço Visual
         selectQtd.addEventListener('change', () => {
             let total = selectQtd.value * precoUnitario;
             totalDisplay.innerText = `Total: R$ ${total},00`;
         });
 
-        // Função de Compra
-        function processarCompra() {
+        // 1. Função que chama o Python para criar o PIX
+        async function gerarPix() {
             const user = firebase.auth().currentUser;
-            const msg = document.getElementById('msgErro');
-
             if (!user) {
-                // Se não estiver logado, salva onde ele estava e manda pro login
                 sessionStorage.setItem('voltarParaCheckout', 'true');
-                window.location.href = "/login"; // Vamos criar essa rota no Python jaja
+                window.location.href = "/login";
                 return;
             }
 
             const qtd = parseInt(selectQtd.value);
             const total = qtd * precoUnitario;
 
-            // Salva no Firestore
-            db.collection("compras").add({
+            // Interface
+            document.getElementById('btn-pagar').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            try {
+                // CHAMA O SEU BACKEND PYTHON
+                const response = await fetch('/processar_pagamento', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: user.email,
+                        valor: total,
+                        descricao: `Festa 0800 - ${qtd}x Ingressos`
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.qr_code_base64) {
+                    // SUCESSO! Mostra o QR Code
+                    mostrarAreaPix(data, qtd, total, user);
+                } else {
+                    alert("Erro ao gerar PIX. Tente novamente.");
+                    location.reload();
+                }
+
+            } catch (error) {
+                console.error("Erro de conexão:", error);
+                alert("Erro ao conectar com servidor.");
+                location.reload();
+            }
+        }
+
+        function mostrarAreaPix(dataMP, qtd, total, user) {
+            // Esconde resumo, mostra PIX
+            document.getElementById('card-resumo').style.display = 'none';
+            document.getElementById('card-pix').style.display = 'block';
+
+            // Preenche imagem e código
+            document.getElementById('img-qrcode').src = "data:image/png;base64," + dataMP.qr_code_base64;
+            document.getElementById('cola-pix').value = dataMP.qr_code;
+
+            // Salva dados na memória para quando o usuário clicar em "Já paguei"
+            dadosCompra = {
                 uid_usuario: user.uid,
                 email_usuario: user.email,
                 evento: "Festa 0800",
                 quantidade: qtd,
                 valor: total,
-                data: new Date(),
-                status: "aprovado"
-            })
+                id_pagamento_mp: dataMP.id_pagamento, // Salva o ID do Mercado Pago
+                status: "pendente", // Começa pendente
+                data: new Date()
+            };
+        }
+
+        // 2. Função final que salva no Firebase e libera o ingresso
+        function confirmarPagamento() {
+            // Em um app real, aqui você perguntaria ao Python: "O pagamento foi confirmado?"
+            // Como é um MVP, vamos confiar no usuário por enquanto e salvar como "aprovado"
+            
+            dadosCompra.status = "aprovado"; // Simulando aprovação imediata
+
+            db.collection("compras").add(dadosCompra)
             .then(() => {
                 window.location.href = "/comprasucesso";
             })
             .catch((error) => {
-                console.error("Erro:", error);
-                msg.innerText = "Erro ao processar. Tente novamente.";
+                console.error("Erro ao salvar:", error);
+                alert("Erro ao salvar ingresso. Contate o suporte.");
             });
         }
-    </script>
 
+        function copiarPix() {
+            const copyText = document.getElementById("cola-pix");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Código PIX copiado!");
+        }
+    </script>
 </body>
 </html>
