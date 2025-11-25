@@ -8,7 +8,7 @@ function login(event) {
 
     auth.signInWithEmailAndPassword(email, senha)
         .then(() => {
-            window.location.href = "index.html";  
+            window.location.href = "/";  
         })
         .catch((error) => {
             let mensagem = "";

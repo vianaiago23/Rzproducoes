@@ -12,23 +12,28 @@
     <!-- CSS externo -->
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="/static/firebase.js"></script>
+
 <body>
 
     <!-- HEADER FIXO -->
     <header>
         <div class="logo">
-        <a href="index.html">
+        <a href="/">
             <img src="/static/IMG_2751.jpg" alt="Logo RZ Produções">
         </a>
     </div>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="eventos.html">Eventos</a>
+            <a href="/">Home</a>
+            <a href="/eventos">Eventos</a>
         </nav>
 
-        <a href="login.html">
-            <button class="btn-acesso">Acesse / Entrar</button>
-        </a>
+        <div class="acoes-header">
+        <a href="/login" class="btn-acesso">Acesse / Entrar</a>
+    </div>
     </header>
 
     <main>

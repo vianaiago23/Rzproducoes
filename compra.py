@@ -2,30 +2,44 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-# Rota Principal: Agora carrega o site real
+# Rota da Home
 @app.route("/")
 def homepage():
     return render_template("index.html")
 
-# Rota de Login (opcional, se quiser uma URL direta)
+# Rota da Eventos
+@app.route("/eventos")
+def eventos():
+    return render_template("eventos.html")
+
+# Rota do Contato
+@app.route("/contato")
+def contato():
+    return render_template("contato.html")
+
+# Nova Rota: Checkout
+@app.route("/checkout")
+def checkout():
+    return render_template("checkout.html")
+
+# Rotas de Login/Cadastro (Para funcionar a navegação limpa)
 @app.route("/login")
 def login():
     return render_template("login.html")
 
-# Rota de Cadastro (opcional)
 @app.route("/cadastro")
 def cadastro():
     return render_template("cadastro.html")
 
-# Rota de Sucesso (mantida)
+# Rota de Sucesso
 @app.route("/comprasucesso")
 def compra_certa():
     return render_template("compracerta.html")
 
-# Rota de Erro (mantida)
+# Rota de Erro
 @app.route("/compraerrada")
 def compra_errada():  
     return render_template("compraerrada.html")
 
 if __name__ == "__main__":
-    app.run(debug=True) # debug=True ajuda a ver erros na tela
+    app.run(debug=True)

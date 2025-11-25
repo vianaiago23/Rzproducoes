@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra - FestaClub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script> <script src="/static/firebase.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+        <a href="/">
+            <img src="/static/IMG_2751.jpg" alt="Logo RZ Produções">
+        </a>
+    </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/eventos">Eventos</a>
+        </nav>
+
+        <div class="acoes-header">
+        <a href="/login" class="btn-acesso">Acesse / Entrar</a>
+    </div>
+    </header>
+
+    <main>
+        <section class="secao-contato" style="padding-top: 120px;">
+            <h1>Resumo do Pedido</h1>
+            <p>Você está a um passo de garantir sua noite!</p>
+
+            <div class="contato-grid">
+                <div class="contato-info" style="width: 100%; max-width: 500px; text-align: left;">
+                    <h2 style="color: var(--cor-secundaria);">Festa 0800 - Edição Verão</h2>
+                    <p><i class="fas fa-calendar"></i> 01 de Janeiro</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Blue Center, Rio de Janeiro</p>
+                    <hr style="border-color: #333; margin: 15px 0;">
+                    
+                    <label for="qtd" style="display:block; margin-bottom: 5px;">Quantidade de Ingressos:</label>
+                    <select id="qtd" style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #333; border-radius: 5px;">
+                        <option value="1">1 Ingresso (R$ 50,00)</option>
+                        <option value="2">2 Ingressos (R$ 100,00)</option>
+                        <option value="3">3 Ingressos (R$ 150,00)</option>
+                        <option value="4">4 Ingressos (R$ 200,00)</option>
+                    </select>
+
+                    <h3 id="totalDisplay" style="margin-top: 20px; font-size: 24px;">Total: R$ 50,00</h3>
+
+                    <button onclick="processarCompra()" class="btn-compre-agora" style="width: 100%; margin-top: 20px;">
+                        CONFIRMAR PAGAMENTO
+                    </button>
+                    
+                    <p id="msgErro" style="color: red; margin-top: 10px; text-align: center;"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Atualiza o preço visualmente quando muda a quantidade
+        const selectQtd = document.getElementById('qtd');
+        const totalDisplay = document.getElementById('totalDisplay');
+        const precoUnitario = 50;
+
+        selectQtd.addEventListener('change', () => {
+            let total = selectQtd.value * precoUnitario;
+            totalDisplay.innerText = `Total: R$ ${total},00`;
+        });
+
+        // Função de Compra
+        function processarCompra() {
+            const user = firebase.auth().currentUser;
+            const msg = document.getElementById('msgErro');
+
+            if (!user) {
+                // Se não estiver logado, salva onde ele estava e manda pro login
+                sessionStorage.setItem('voltarParaCheckout', 'true');
+                window.location.href = "/login"; // Vamos criar essa rota no Python jaja
+                return;
+            }
+
+            const qtd = parseInt(selectQtd.value);
+            const total = qtd * precoUnitario;
+
+            // Salva no Firestore
+            db.collection("compras").add({
+                uid_usuario: user.uid,
+                email_usuario: user.email,
+                evento: "Festa 0800",
+                quantidade: qtd,
+                valor: total,
+                data: new Date(),
+                status: "aprovado"
+            })
+            .then(() => {
+                window.location.href = "/comprasucesso";
+            })
+            .catch((error) => {
+                console.error("Erro:", error);
+                msg.innerText = "Erro ao processar. Tente novamente.";
+            });
+        }
+    </script>
+
+</body>
+</html>

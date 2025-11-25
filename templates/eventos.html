@@ -15,24 +15,29 @@
     </style>
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="/static/firebase.js"></script>
+
 <body>
 
   <header>
     <div class="logo">
-        <a href="index.html">
+        <a href="/">
             <!-- Imagem de placeholder para garantir que o arquivo seja gerado -->
             <img src="/static/IMG_2751.jpg" alt="Logo RZ Produções">
         </a>
     </div>
     
     <nav>
-        <a href="eventos.html">Eventos</a>
+        <a href="/eventos">Eventos</a>
         <a href="#futuras">Futuras Organizações</a>
-        <a href="contato.html">Contato</a>
+        <a href="/contato">Contato</a>
     </nav>
     
-    <div class="acoes-header">
-        <button class="btn-acesso" onclick="openModal()">Acesse / Entrar</button>
+        <div class="acoes-header">
+        <a href="/login" class="btn-acesso">Acesse / Entrar</a>
     </div>
 </header>
 
@@ -99,7 +104,7 @@
                     </div>
                     <!-- FIM CÓDIGO DAS BEBIDAS -->
 
-                    <button class="btn-compre-agora">COMPRAR INGRESSO</button>
+                    <a href="/checkout" class="btn-compre-agora">COMPRAR INGRESSO</a>
                     
                     <!-- CÓDIGO DO LINE UP -->
                     <h2 class="lineup-title">Line Up</h2>

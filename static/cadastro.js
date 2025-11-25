@@ -23,7 +23,7 @@ function criarConta(event) {
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
                     // Agora sim o login está ativo → Redireciona
-                    window.location.href = "index.html";
+                    window.location.href = "/";
                 }
             });
         })
