@@ -9,15 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- CSS externo -->
-    <link rel="stylesheet" href="/static/style.css">
+    <!-- CSS (Estilos para o Line Up, Bebidas e Core Styles) -->
+    <!-- Presume-se que o style.css original está carregado, mas adicionamos os estilos customizados aqui -->
+    
+    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header>
     <div class="logo">
         <a href="index.html">
-            <img src="/static/IMG_2751.jpg" alt="Logo RZ Produções">
+            <!-- Imagem de placeholder para garantir que o arquivo seja gerado -->
+            <img src="IMG_2751.jpg" alt="Logo RZ Produções">
         </a>
     </div>
     
@@ -40,10 +44,11 @@
 
             <div class="evento-detalhe">
 
-                <img src="/static/img/evento1.jpg" alt="Imagem do Evento" class="banner-evento">
+                <!-- Placeholder para a imagem do evento -->
+                <img src="IMG_2758.jpg" alt="Imagem do Evento" class="banner-evento">
 
                 <div class="info-evento">
-                    <h1 class="titulo-evento">0800</h1>
+                    <h1 class="titulo-evento">Festa Zero800</h1>
 
                     <p class="descricao-evento">
                         Prepare-se para reviver os maiores clássicos dos anos 2000!  
@@ -57,7 +62,69 @@
                         <li><i class="fas fa-ticket-alt"></i> Ingressos a partir de R$ 50</li>
                     </ul>
 
+                    <!-- CÓDIGO DAS BEBIDAS -->
+                    <h4 class="drinks-title">Bebidas Disponíveis</h4>
+                    <div class="drinks-container">
+                        
+                        <div class="drink-card">
+                            <img src="Imagem.jpg" alt="Gin Tônica" class="drink-photo">
+                            <p>ABSOLUT</p>
+                        </div>
+                        
+                        <div class="drink-card">
+                            <img src="Imagem 2.jpg" alt="BEEFEATER" class="drink-photo">
+                            <p>BEEFEATER</p>
+                        </div>
+                        
+                        <div class="drink-card">
+                            <img src="Imagem 4.jpg" alt="Cerveja Artesanal" class="drink-photo">
+                            <p>SMIRNOFF</p>
+                        </div>
+
+                        <div class="drink-card">
+                            <img src="Imagem 5.jpg" alt="Caipirinha" class="drink-photo">
+                            <p>GORDON'S</p>
+                        </div>
+
+                        <div class="drink-card">
+                            <img src="Imagem 7.jpg" alt="Tequila" class="drink-photo">
+                            <p>RED-BULL</p>
+                        </div>
+                        
+                        <div class="drink-card">
+                            <img src="Imagem 6.jpg" alt="Água e Refri" class="drink-photo">
+                            <p>DIVERSOS</p>
+                        </div>
+                        
+                    </div>
+                    <!-- FIM CÓDIGO DAS BEBIDAS -->
+
                     <button class="btn-compre-agora">COMPRAR INGRESSO</button>
+                    
+                    <!-- CÓDIGO DO LINE UP -->
+                    <h2 class="lineup-title">Line Up</h2>
+                    <div class="lineup-container">
+                        
+                        <div class="dj-card">
+                            <img src="https://placehold.co/100x100/8B00FF/F5F5F5?text=DJ%20Rz" alt="Foto DJ Alpha" class="dj-photo">
+                            <h3>DJ RZ</h3>
+                            <p class="dj-style">Tech House</p>
+                        </div>
+                        
+                        <div class="dj-card">
+                            <img src="https://placehold.co/100x100/00FFC2/1A1A1A?text=DJ%20Mia" alt="Foto DJ Beta" class="dj-photo">
+                            <h3>Mia F.</h3>
+                            <p class="dj-style">Classic Disco</p>
+                        </div>
+                        
+                        <div class="dj-card">
+                            <img src="https://placehold.co/100x100/FF0000/F5F5F5?text=DJ%20Vic" alt="Foto DJ Gamma" class="dj-photo">
+                            <h3>Victor L.</h3>
+                            <p class="dj-style">Minimal Techno</p>
+                        </div>
+                        
+                    </div>
+                    <!-- FIM CÓDIGO DO LINE UP -->
 
                 </div>
             </div>
@@ -70,7 +137,7 @@
             <div class="eventos-grid">
 
                 <div class="evento-card">
-                    <img src="/static/img/evento4.jpg" alt="Festival 2026">
+                    <img src="https://placehold.co/300x200/252525/F5F5F5?text=FESTIVAL" alt="Festival 2026">
                     <div class="card-info">
                         <h3>Festival de Verão 2026</h3>
                         <p>Maior festival de música eletrônica</p>
@@ -80,7 +147,7 @@
                 </div>
 
                 <div class="evento-card">
-                    <img src="/static/img/evento5.jpg" alt="Reveillon 2025">
+                    <img src="https://placehold.co/300x200/252525/F5F5F5?text=REVEILLON" alt="Reveillon 2025">
                     <div class="card-info">
                         <h3>Reveillon Premium</h3>
                         <p>Virada mais luxuosa do país</p>
@@ -133,9 +200,20 @@
 
     <!-- COPYRIGHT -->
     <div class="footer-copy">
-        © <span id="anoAtual"></span> RZ Produções — Desenvolvido por @iagov1ana. Todos os direitos reservados.
+        © <span id="anoAtual">2025</span> RZ Produções — Desenvolvido por @iagov1ana. Todos os direitos reservados.
     </div>
 </footer>
+
+<script>
+    // Script simples para garantir que o ano no footer seja o atual
+    document.getElementById('anoAtual').textContent = new Date().getFullYear();
+    
+    // Placeholder para a função openModal()
+    function openModal() {
+        console.log("Abrir modal de acesso/login");
+        // Implemente sua lógica de modal aqui
+    }
+</script>
 
 </body>
 </html>

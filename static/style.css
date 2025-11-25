@@ -194,6 +194,7 @@ header nav a:hover {
         padding: 12px 28px;
     }
 }
+
 /* -------------------- */
 /* SEÇÃO EVENTOS */
 /* -------------------- */
@@ -258,41 +259,202 @@ header nav a:hover {
     background-color: #d00055;
 }
 
-/* -------------------- */
-/* EVENTOS - PÁGINA DETALHES */
-/* -------------------- */
-.evento-detalhe {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
-    max-width: 1200px;
-    margin: auto;
-}
+        /* Estilos base (cores sugeridas pela interação anterior) */
+        :root {
+            --roxo: #eb0908;
+            --verde-neon: #eb0908;
+            --fundo-escuro: #1A1A1A;
+            --card-fundo: #252525;
+            --texto-claro: #F5F5F5;
+        }
 
-.banner-evento {
-    width: 50%;
-    border-radius: 12px;
-}
+        /* -------------------------------------- */
+        /* Estilos do Line Up (EXISTENTE) */
+        /* -------------------------------------- */
+        .lineup-title {
+            color: var(--verde-neon);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 40px 0 20px 0;
+            text-align: center;
+            width: 100%; /* Garante que o título centralize */
+        }
 
-.info-evento {
-    width: 50%;
-}
+        .lineup-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            margin-top: 20px;
+            width: 100%;
+            /* Quebra de linha para mobile */
+            flex-wrap: wrap; 
+        }
 
-.titulo-evento {
-    font-size: 34px;
-    margin-bottom: 15px;
-}
+        .dj-card {
+            background-color: var(--card-fundo);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+            flex: 1 1 30%; /* Responsividade: 3 cartões por linha, mas encolhem */
+            min-width: 120px; /* Garante que não fiquem muito pequenos */
+        }
+        
+        @media (max-width: 600px) {
+            .dj-card {
+                flex: 1 1 100%; /* Em telas pequenas, ocupa a largura total */
+                max-width: none;
+            }
+            .lineup-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        .dj-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
 
-.lista-info li {
-    list-style: none;
-    margin: 10px 0;
-    font-size: 16px;
-}
+        .dj-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--roxo);
+            margin-bottom: 10px;
+        }
 
-.lista-info i {
-    margin-right: 8px;
-    color: var(--cor-secundaria);
-}
+        .dj-card h3 {
+            font-size: 1em;
+            color: var(--texto-claro);
+            margin: 5px 0 2px 0;
+        }
+
+        .dj-style {
+            font-size: 0.8em;
+            color: #aaa;
+            font-weight: 300;
+        }
+        
+        /* -------------------------------------- */
+        /* Estilos das Bebidas (ATUALIZADO PARA SER MENOR) */
+        /* -------------------------------------- */
+        .drinks-title {
+            color: var(--roxo);
+            font-size: 1.1rem; /* Reduzido para ficar em escala com os cards menores */
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .drinks-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto; /* Permite scroll horizontal se tiver muitos cards */
+            padding-bottom: 10px; /* Espaço para a barra de rolagem */
+            margin-bottom: 20px;
+            
+            /* Estilo para a barra de rolagem no WebKit */
+            scrollbar-width: thin;
+            scrollbar-color: var(--roxo) var(--card-fundo);
+        }
+
+        .drinks-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .drinks-container::-webkit-scrollbar-thumb {
+            background-color: var(--roxo);
+            border-radius: 10px;
+        }
+
+        .drink-card {
+            flex: 0 0 auto; /* Não cresce e não encolhe, mantém o tamanho fixo */
+            width: 70px; 
+            text-align: center;
+            padding: 8px;
+            border-radius: 8px;
+            background-color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .drink-card:hover {
+            background-color: #444;
+        }
+
+        .drink-photo {
+            width: 50px; 
+            height: 50px; 
+            object-fit: contain; /* Mantém a bebida visível */
+            margin-bottom: 5px;
+        }
+
+        .drink-card p {
+            font-size: 0.7em; 
+            font-weight: 400;
+            color: var(--texto-claro);
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        /* -------------------------------------- */
+        /* Estilos Core (EXISTENTE) */
+        /* -------------------------------------- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--fundo-escuro);
+            color: var(--texto-claro);
+            margin: 0;
+            padding: 0;
+        }
+        header { 
+            display: flex; 
+            justify-content: space-around; 
+            align-items: center; 
+            padding: 15px 5%; 
+            background-color: #000; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+        }
+        .logo img { height: 40px; }
+        .secao-eventos { padding: 60px 5% 40px 5%; }
+        .evento-detalhe { 
+            display: flex; 
+            gap: 40px; 
+            background-color: var(--card-fundo); 
+            padding: 30px; 
+            border-radius: 15px; 
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap; /* Permite quebrar linha em mobile */
+        }
+        .banner-evento { 
+            width: 40%; 
+            min-width: 300px;
+            height: auto; 
+            border-radius: 12px; 
+            object-fit: cover; 
+            flex-shrink: 0; 
+        }
+        .info-evento { 
+            flex-grow: 1; 
+            min-width: 300px;
+        }
+        .titulo-evento { color: var(--roxo); margin-top: 0; }
+        /* ALTERADO: Aumento do padding para ampliar o botão de compra */
+        .btn-compre-agora {
+            background-color: var(--verde-neon);
+            color: var(--fundo-escuro);
+            padding: 16px 35px; /* Aumentado de 12px 25px para 16px 35px */
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 0; 
+            transition: background-color 0.3s;
+        }
+        .btn-compre-agora:hover { background-color: #00e6a8; }
 
 /* -------------------- */
 /* CONTATO */
