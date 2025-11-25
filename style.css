@@ -1,0 +1,698 @@
+/* -------------------- */
+/* CONFIGURAÇÕES GERAIS */
+/* -------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #000000;
+    color: #fff;
+}
+
+img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* Variáveis Gerais */
+:root {
+    --cor-primaria: #ff0066;
+    --cor-secundaria: #ffdd00;
+    --cor-card: #1a1a1a;
+    --cor-texto-claro: #eee;
+}
+
+/* 1. HEADER GERAL E CONTAINER (CONSOLIDADO) */
+
+.logo img {
+    height: 30px;      /* tamanho da logo */
+    width: auto;       /* mantém proporção */
+    object-fit: contain;
+    display: block;
+}
+header {
+    width: 100%;
+    background: #000000; /* Cor de fundo escura */
+    padding: 15px 5%; /* Adicione padding horizontal para margem */
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    
+    /* Regras Flexbox para alinhamento L-C-D */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribui o espaço entre os elementos principais */
+}
+
+/* 2. LOGO */
+.logo a {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    /* Adicionado para garantir que a logo não seja espremida */
+    flex-shrink: 0; 
+}
+
+/* 3. MENU (NAVEGAÇÃO CENTRALIZADA) */
+header nav {
+    /* Remove o posicionamento absoluto */
+    position: relative; 
+    /* Permite que a navegação cresça e empurre os outros elementos */
+    flex-grow: 1; 
+    /* Centraliza o conteúdo dentro da NAV */
+    text-align: center;
+}
+
+header nav a {
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 20px; /* Adiciona espaçamento entre os links */
+}
+
+header nav a:hover {
+    color: #ffcc00;
+}
+
+/* 4. ÁREA DE AÇÕES DO HEADER (Botão de Acesso Fica Aqui) */
+.acoes-header { /* Use .acoes-header ou crie um div com essa classe */
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    /* Adicionado para garantir que as ações fiquem à direita */
+    flex-shrink: 0; 
+}
+
+/* 5. BOTÃO ACESSO */
+.btn-acesso {
+    padding: 10px 18px;
+    border: none;
+    background: #ffcc00;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #111; /* Garante que o texto fique escuro no fundo amarelo */
+}
+
+.btn-acesso:hover {
+    background: #e6b800;
+}
+
+/* -------------------- */
+/* HERO (index) */
+/* -------------------- */
+.hero {
+    position: relative;
+    height: 90vh;
+    width: 100%;
+    background: url("IMG_156.jpeg") center center / cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+/* Escurece a imagem para o texto ficar visível */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* Conteúdo sempre centralizado e acima do overlay */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título */
+.hero-content h1 {
+    font-size: 58px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+/* Subtítulo */
+.hero-content p {
+    font-size: 22px;
+    color: #eee;
+    margin-bottom: 40px;
+}
+
+/* Botão ajustado */
+.btn-compre-agora {
+    padding: 16px 40px;
+    background-color: var(--cor-primaria);
+    border: none;
+    border-radius: 12px;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 40px !important;
+}
+
+.btn-compre-agora:hover {
+    opacity: 0.9;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .hero {
+        height: 75vh;
+    }
+
+    .hero-content h1 {
+        font-size: 38px;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+    }
+
+    .btn-compre-agora {
+        font-size: 18px;
+        padding: 12px 28px;
+    }
+}
+/* -------------------- */
+/* SEÇÃO EVENTOS */
+/* -------------------- */
+.secao-eventos {
+    padding: 60px 40px;
+}
+
+.secao-eventos h2 {
+    font-size: 32px;
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.eventos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 30px;
+}
+
+.evento-card {
+    background: var(--cor-card);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.evento-card:hover {
+    transform: scale(1.03);
+}
+
+.card-info {
+    padding: 20px;
+}
+
+.card-info h3 {
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+.card-info p {
+    color: #bbb;
+    font-size: 15px;
+}
+
+.preco {
+    display: block;
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.btn-detalhes {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: var(--cor-primaria);
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.btn-detalhes:hover {
+    background-color: #d00055;
+}
+
+/* -------------------- */
+/* EVENTOS - PÁGINA DETALHES */
+/* -------------------- */
+.evento-detalhe {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.banner-evento {
+    width: 50%;
+    border-radius: 12px;
+}
+
+.info-evento {
+    width: 50%;
+}
+
+.titulo-evento {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.lista-info li {
+    list-style: none;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.lista-info i {
+    margin-right: 8px;
+    color: var(--cor-secundaria);
+}
+
+/* -------------------- */
+/* CONTATO */
+/* -------------------- */
+.secao-contato {
+    padding: 60px;
+    text-align: center;
+}
+
+.contato-grid {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+.form-contato,
+.contato-info {
+    background: var(--cor-card);
+    padding: 30px;
+    border-radius: 12px;
+    width: 45%;
+}
+
+.form-contato label {
+    font-weight: 600;
+    display: block;
+    margin-top: 10px;
+}
+
+.form-contato input,
+.form-contato textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #000;
+    color: #fff;
+}
+
+.btn-enviar {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: var(--cor-secundaria);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.btn-enviar:hover {
+    opacity: 0.8;
+}
+
+/* -------------------- */
+/* LOGIN */
+/* -------------------- */
+.senha-requisitos {
+    font-size: 13px;
+    color: #888;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+.secao-login {
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-box {
+    background: var(--cor-card);
+    padding: 40px;
+    width: 400px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.form-login label {
+    text-align: left;
+    display: block;
+    margin-top: 10px;
+}
+
+.form-login input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    margin-top: 6px;
+    background-color: #000;
+    color: #fff;
+}
+
+.btn-login {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: var(--cor-primaria);
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-login:hover {
+    background-color: #d00055;
+}
+
+.link-cadastro {
+    color: var(--cor-secundaria);
+    font-weight: 600;
+}
+
+/* -------------------- */
+/* FOOTER */
+/* -------------------- */
+
+footer {
+    background-color: #000;
+    padding: 40px 20px;
+    border-top: 1px solid #222;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.footer-col {
+    margin: 20px;
+}
+
+.footer-col h4 {
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.footer-col a {
+    color: #ccc;
+    text-decoration: none;
+    display: block;
+    margin-top: 8px;
+    transition: 0.3s;
+}
+
+.footer-col a:hover {
+    color: var(--cor-secundaria);
+}
+.footer-copy {
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    color: #bbbbbb;
+    font-size: 0.9em;
+    border-top: 1px solid #333;
+    background-color: #0f0f0f;
+}
+
+/* -------------------- */
+/* RESPONSIVIDADE */
+/* -------------------- */
+@media (max-width: 900px) {
+    .evento-detalhe {
+        flex-direction: column;
+    }
+
+    .banner-evento,
+    .info-evento {
+        width: 100%;
+    }
+
+    .contato-grid {
+        flex-direction: column;
+    }
+
+    .form-contato,
+    .contato-info {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+}
+
+
+/*conta css*/
+
+:root {
+    /* Variáveis de Cores */
+    --cor-primaria: #8B00FF; /* Roxo Vibrante */
+    --cor-secundaria: #00FFC2; /* Verde Neon */
+    --cor-fundo-escuro: #1A1A1A;
+    --cor-fundo-card: #252525;
+    --cor-texto-claro: #F5F5F5;
+    --cor-destaque: #EC3D67; /* Rosa do Botão */
+    --cor-fundo-hover: #2e2e2e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--cor-fundo-escuro);
+    color: var(--cor-texto-claro);
+    min-height: 100vh;
+}
+
+/* --- LAYOUT GERAL --- */
+.conta-header {
+    background-color: #121212;
+    padding: 20px 0;
+    border-bottom: 2px solid var(--cor-primaria);
+    margin-bottom: 30px;
+}
+
+.conta-header h1 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-size: 2em;
+    color: var(--cor-texto-claro);
+}
+
+.conta-main {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 30px;
+}
+
+/* --- MENU LATERAL --- */
+.menu-lateral {
+    flex: 0 0 250px; 
+    background-color: var(--cor-fundo-card);
+    border-radius: 8px;
+    padding: 20px 0;
+    height: fit-content;
+    transition: box-shadow 0.3s ease; /* Adicionando transição de sombra */
+}
+
+/* Otimização: Adicionando efeito visual no foco/hover do menu */
+.menu-lateral:hover {
+    box-shadow: 0 0 15px rgba(139, 0, 255, 0.3); /* Sombra suave da cor primária */
+}
+
+.menu-lateral a {
+    display: flex; /* Usar flex para alinhar o ícone e o texto */
+    align-items: center;
+    padding: 15px 25px;
+    color: var(--cor-texto-claro);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease-in-out; /* Transição mais suave para hover */
+    font-weight: 500;
+}
+
+.menu-lateral a i {
+    margin-right: 15px; /* Aumentei a margem para separar mais o ícone */
+    width: 20px;
+    text-align: center;
+}
+
+.menu-lateral a:hover {
+    background-color: var(--cor-fundo-hover);
+    color: var(--cor-secundaria);
+    border-left: 3px solid var(--cor-secundaria);
+}
+
+/* Item ativo */
+.menu-lateral a.active {
+    background-color: var(--cor-fundo-escuro);
+    border-left: 3px solid var(--cor-secundaria);
+    color: var(--cor-secundaria);
+}
+
+/* --- CONTEÚDO PRINCIPAL --- */
+.conteudo-principal {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.secao {
+    background-color: var(--cor-fundo-card);
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.secao h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: var(--cor-primaria);
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+/* --- INGRESSOS --- */
+.ingresso-card {
+    display: flex;
+    background-color: #333;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.ingresso-card:hover {
+    transform: translateY(-3px); /* Efeito de elevação sutil no hover */
+}
+
+.ingresso-info {
+    padding: 20px;
+    flex: 1;
+}
+
+/* ... (restante do código de ingressos é ótimo, sem alterações) ... */
+
+/* --- DADOS PESSOAIS --- */
+.dados-linha {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed #444;
+    font-size: 1em;
+}
+
+.dados-linha span:first-child {
+    font-weight: 300;
+    color: #ccc;
+}
+
+.dados-linha span:last-child {
+    font-weight: 600;
+    color: var(--cor-texto-claro);
+}
+
+.btn-logout {
+    background-color: var(--cor-destaque);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: 600;
+    transition: opacity 0.3s, background-color 0.3s;
+}
+
+.btn-logout:hover {
+    opacity: 0.9;
+    background-color: #d13059; /* Escurece um pouco o botão no hover */
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 850px) {
+    .conta-main {
+        flex-direction: column;
+        gap: 20px; /* Reduzi o gap em telas pequenas */
+    }
+    .menu-lateral {
+        flex: 1 1 auto;
+        padding: 0; /* Removendo padding vertical para o menu virar barra */
+        border-radius: 0;
+        
+        /* OTIMIZAÇÃO: Transforma o menu em uma barra horizontal rolavel */
+        display: flex;
+        overflow-x: auto; /* Permite rolagem horizontal */
+        white-space: nowrap; /* Impede que os links quebrem linha */
+        border-radius: 8px;
+    }
+    
+    .menu-lateral a {
+        padding: 10px 15px;
+        flex-shrink: 0; /* Impede que os itens encolham */
+        border-left: none !important; /* Limpa o estilo de desktop */
+        border-right: 3px solid transparent; /* Nova linha de destaque */
+    }
+
+    .menu-lateral a.active {
+        background-color: var(--cor-fundo-escuro);
+        border-left: none !important;
+        border-bottom: 3px solid var(--cor-secundaria); /* Mantenho o destaque inferior */
+    }
+    
+    .menu-lateral a i {
+        display: none; /* Oculta ícones em telas muito pequenas para economizar espaço */
+    }
+}

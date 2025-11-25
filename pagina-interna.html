@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Interna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="firebase.js"></script>
+</head>
+
+<body class="bg-gray-900 text-white">
+
+    <div class="p-6">
+        <h1 class="text-3xl font-bold">Bem-vindo!</h1>
+
+        <button onclick="logout()" class="mt-6 bg-red-600 p-3 rounded-lg">
+            Sair
+        </button>
+    </div>
+
+    <script>
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                window.location.href = "login.html";
+            }
+        });
+
+        function logout() {
+            auth.signOut();
+        }
+    </script>
+
+</body>
+</html>

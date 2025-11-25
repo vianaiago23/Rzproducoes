@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - FestaClub</title>
+
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <script src="firebase.js"></script>
+</head>
+<body>
+
+   <main>
+    <section class="secao-login">
+        <div class="login-box">
+
+            <h1>Criar Conta</h1>
+
+            <form class="form-login" onsubmit="criarConta(event)">
+
+                <label for="nome">Nome:</label>
+                <input id="nome" type="text" placeholder="Digite seu nome" required>
+
+                <label for="sobrenome">Sobrenome:</label>
+                <input id="sobrenome" type="text" placeholder="Digite seu sobrenome" required>
+
+                <label for="email">E-mail:</label>
+                <input id="email" type="email" placeholder="Digite seu e-mail" required>
+
+                <label for="celular">Celular:</label>
+                <input id="celular" type="tel" placeholder="(DDD) 9 9999-9999" required>
+
+                <label for="senha">Senha:</label>
+                <input id="senha" type="password" placeholder="Crie uma senha" required>
+
+                <!-- ⚠️ ADENDO SOBRE A SENHA -->
+                <p class="senha-requisitos">
+                    A senha deve conter: letra maiúscula, letra minúscula, número e caractere especial.
+                </p>
+
+                <button type="submit" class="btn-login">Criar conta</button>
+
+                <p id="msgCadastro" class="msg-erro"></p>
+
+            </form>
+
+            <p class="cadastro">
+                Já tem conta?
+                <a href="login.html" class="link-cadastro">Entrar</a>
+            </p>
+
+        </div>
+    </section>
+</main>
+
+
+    <!-- FOOTER -->
+<footer id="contato">
+    <div class="footer-content">
+
+        <div class="footer-col">
+            <h4>Quem Somos</h4>
+            <p>Desde 2020, transformando suas noites em festas inesquecíveis.</p>
+            <a href="#">Saiba Mais</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contato Direto</h4>
+            <a href="https://wa.me/5521987654321" target="_blank">
+                <i class="fab fa-whatsapp"></i> (21) 96649-4121
+            </a>
+            <a href="mailto:contato@suaempresa.com.br">
+                <i class="fas fa-envelope"></i> contato@suaempresa.com.br
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Siga-nos</h4>
+            <div class="social-icons">
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Informações</h4>
+            <a href="#">Termos de Uso</a>
+            <a href="#">Política de Privacidade</a>
+            <a href="#">FAQs</a>
+        </div>
+
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div class="footer-copy">
+        © <span id="anoAtual"></span> RZ Produções — Desenvolvido por @iagov1ana. Todos os direitos reservados.
+    </div>
+</footer>
+
+    <script src="cadastro.js"></script>
+</body>
+</html>
