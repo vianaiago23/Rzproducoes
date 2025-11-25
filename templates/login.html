@@ -3,81 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato - FestaClub</title>
+    <title>Login - FestaClub</title>
 
     <!-- Fontes e Ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- CSS externo -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <script src="/static/firebase.js"></script>
 </head>
 <body>
 
-    <!-- HEADER FIXO -->
     <header>
-        <div class="logo">
+    <div class="logo">
         <a href="index.html">
-            <img src="IMG_2751.jpg" alt="Logo RZ Produções">
+            <img src="/static/IMG_2751.jpg" alt="Logo RZ Produções">
         </a>
     </div>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="eventos.html">Eventos</a>
-        </nav>
-
-        <a href="login.html">
-            <button class="btn-acesso">Acesse / Entrar</button>
-        </a>
-    </header>
+    
+    <nav>
+        <a href="eventos.html">Eventos</a>
+        <a href="#futuras">Futuras Organizações</a>
+        <a href="contato.html">Contato</a>
+    </nav>
+    
+</header>
 
     <main>
-        <section class="secao-contato">
-            <h1>Entre em Contato</h1>
-            <p>Preencha o formulário abaixo e retornaremos o mais rápido possível.</p>
+        <section class="secao-login">
+            <div class="login-box">
 
-            <div class="contato-grid">
+                <h1>Entrar</h1>
+                <p class="subtitulo">Acesse sua conta para comprar ingressos e acompanhar eventos.</p>
 
-                <!-- FORMULÁRIO DE CONTATO -->
-                <form class="form-contato">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" placeholder="Seu nome completo" required>
+                <form class="form-login" onsubmit="login(event)">
 
                     <label for="email">E-mail:</label>
                     <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
 
-                    <label for="mensagem">Mensagem:</label>
-                    <textarea id="mensagem" placeholder="Digite sua mensagem..." required></textarea>
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" placeholder="Sua senha" required>
 
-                    <button type="submit" class="btn-enviar">Enviar Mensagem</button>
+                    <button type="submit" class="btn-login">Entrar</button>
+
+                    <p id="msgLogin" class="msg-erro"></p>
+
                 </form>
 
-                <!-- CARTÃO DE INFORMAÇÕES -->
-                <div class="contato-info">
-                    <h2>Fale Conosco</h2>
-
-                    <p><i class="fas fa-map-marker-alt"></i> Rio de Janeiro - RJ</p>
-
-                    <p>
-                        <i class="fab fa-whatsapp"></i> 
-                        <a href="https://wa.me/5521987654321" target="_blank">(21) 98765-4321</a>
-                    </p>
-
-                    <p>
-                        <i class="fas fa-envelope"></i>
-                        <a href="mailto:contato@suaempresa.com.br">contato@suaempresa.com.br</a>
-                    </p>
-
-                    <h3>Nossas Redes:</h3>
-                    <a href="#" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-                </div>
+                <p class="cadastro">
+                    Não tem conta?
+                    <a href="cadastro.html" class="link-cadastro">Criar conta</a>
+                </p>
 
             </div>
-
         </section>
     </main>
 
-    <!-- FOOTER -->
+   <!-- FOOTER -->
 <footer id="contato">
     <div class="footer-content">
 
@@ -119,5 +107,29 @@
     </div>
 </footer>
 
+<!-- JS externo -->
+<script src="/static/script.js"></script>
+
+<!-- Inserir ANO automático -->
+<script>
+    document.getElementById("anoAtual").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
+
+<!-- JS externo geral -->
+<script src="/static/script.js"></script>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="/static/firebase.js"></script>
+
+<!-- Arquivo com a função login(event) -->
+<script src="/static/login.js"></script>
+
+</body>
+</html>
 </body>
 </html>
