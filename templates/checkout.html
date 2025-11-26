@@ -38,13 +38,26 @@
             
             <div class="contato-grid">
                 
-                <!-- ESTADO 1: Resumo do Pedido -->
+                <!-- ESTADO 1: Resumo do Pedido e Dados -->
                 <div id="card-resumo" class="contato-info" style="width: 100%; max-width: 500px; text-align: left;">
                     <h2 style="color: var(--cor-secundaria);">Festa 0800 - Edição Verão</h2>
                     <p><i class="fas fa-map-marker-alt"></i> Blue Center, Rio de Janeiro</p>
                     <hr style="border-color: #333; margin: 15px 0;">
                     
-                    <label style="display:block; margin-bottom: 5px;">Quantidade:</label>
+                    <!-- CAMPOS NOVOS PARA O USUÁRIO PREENCHER -->
+                    <div style="margin-bottom: 15px;">
+                        <label style="display:block; margin-bottom: 5px; color: #ccc;">Seu Nome:</label>
+                        <input type="text" id="nome_pagador" placeholder="Primeiro Nome" style="width: 48%; padding: 10px; background: #000; color: #fff; border: 1px solid #333; border-radius: 5px;">
+                        <input type="text" id="sobrenome_pagador" placeholder="Sobrenome" style="width: 48%; padding: 10px; background: #000; color: #fff; border: 1px solid #333; border-radius: 5px;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display:block; margin-bottom: 5px; color: #ccc;">CPF do Pagador:</label>
+                        <input type="text" id="cpf_pagador" placeholder="Apenas números (Ex: 12345678900)" maxlength="11" style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #333; border-radius: 5px;">
+                        <small style="color: #666; font-size: 11px;">Necessário para gerar o PIX.</small>
+                    </div>
+
+                    <label style="display:block; margin-bottom: 5px; color: #ccc;">Quantidade:</label>
                     <select id="qtd" style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #333; border-radius: 5px;">
                         <option value="1">1 Ingresso (R$ 50,00)</option>
                         <option value="2">2 Ingressos (R$ 100,00)</option>
@@ -53,29 +66,31 @@
 
                     <h3 id="totalDisplay" style="margin-top: 20px; font-size: 24px;">Total: R$ 50,00</h3>
 
-                    <!-- Botão que gera o PIX -->
                     <button id="btn-pagar" onclick="gerarPix()" class="btn-compre-agora" style="width: 100%; margin-top: 20px;">
                         PAGAR COM PIX
                     </button>
                     
                     <p id="msgErro" style="color: red; margin-top: 10px; text-align: center; display: none;"></p>
-                    <p id="loading" style="color: yellow; margin-top: 10px; text-align: center; display: none;">Gerando QR Code...</p>
+                    <p id="loading" style="color: yellow; margin-top: 10px; text-align: center; display: none;">Gerando Código PIX...</p>
                 </div>
 
-                <!-- ESTADO 2: Área do PIX (Escondido inicialmente) -->
+                <!-- ESTADO 2: Área do PIX (Apenas Copia e Cola) -->
                 <div id="card-pix" class="contato-info" style="width: 100%; max-width: 500px; text-align: center; display: none;">
-                    <h2 style="color: #00bd20;">Pagamento Gerado!</h2>
-                    <p>Escaneie o QR Code abaixo no app do seu banco:</p>
+                    <h2 style="color: #00bd20; margin-bottom: 20px;">Pagamento Gerado!</h2>
                     
-                    <!-- Imagem do QR Code que vem do Mercado Pago -->
-                    <img id="/static/IMG_2765.jpg" src="" alt="QR Code PIX" style="width: 250px; margin: 20px auto; border-radius: 10px;">
+                    <p style="margin-bottom: 10px; color: #ccc;">Copie o código abaixo e cole no app do seu banco na opção <strong>"PIX Copia e Cola"</strong>:</p>
                     
-                    <textarea id="cola-pix" rows="3" style="width: 100%; font-size: 12px; color: #000;" readonly>00020126440014br.gov.bcb.pix0122iagosviana10@gmail.com5204000053039865802BR5916Iago Silva Viana6009Sao Paulo610901227-20062240520daqr18404231525477826304A13A</textarea>
-                    <button onclick="copiarPix()" style="background: #333; color: white; border: none; padding: 5px 10px; margin-bottom: 20px; cursor: pointer;">Copiar Código</button>
+                    <div style="background: #222; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed #555;">
+                        <textarea id="cola-pix" rows="4" style="width: 100%; font-size: 13px; color: #fff; background: transparent; border: none; resize: none; word-break: break-all;" readonly></textarea>
+                    </div>
+
+                    <button onclick="copiarPix()" style="background: var(--cor-secundaria); color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 20px;">
+                        <i class="fas fa-copy"></i> COPIAR CÓDIGO
+                    </button>
 
                     <hr style="border-color: #333;">
                     
-                    <p style="font-size: 14px; color: #ccc;">Após pagar no banco, clique abaixo para liberar seu ingresso.</p>
+                    <p style="font-size: 14px; color: #ccc;">Após pagar no banco, confirme abaixo:</p>
                     <button onclick="confirmarPagamento()" class="btn-compre-agora" style="width: 100%; background-color: #00bd20;">
                         JÁ FIZ O PAGAMENTO
                     </button>
@@ -86,19 +101,16 @@
     </main>
 
     <script>
-        // Variáveis Globais
         const selectQtd = document.getElementById('qtd');
         const totalDisplay = document.getElementById('totalDisplay');
         const precoUnitario = 50;
-        let dadosCompra = {}; // Para guardar temporariamente
+        let dadosCompra = {}; 
 
-        // Atualiza Preço Visual
         selectQtd.addEventListener('change', () => {
             let total = selectQtd.value * precoUnitario;
             totalDisplay.innerText = `Total: R$ ${total},00`;
         });
 
-        // 1. Função que chama o Python para criar o PIX
         async function gerarPix() {
             const user = firebase.auth().currentUser;
             if (!user) {
@@ -107,78 +119,87 @@
                 return;
             }
 
+            // PEGA OS DADOS DOS INPUTS
+            const nome = document.getElementById('nome_pagador').value;
+            const sobrenome = document.getElementById('sobrenome_pagador').value;
+            const cpf = document.getElementById('cpf_pagador').value.replace(/\D/g, ''); // Remove pontos e traços
+
+            // VALIDAÇÃO BÁSICA
+            if (!nome || !sobrenome || cpf.length !== 11) {
+                alert("Por favor, preencha seu Nome, Sobrenome e um CPF válido (11 números).");
+                return;
+            }
+
             const qtd = parseInt(selectQtd.value);
             const total = qtd * precoUnitario;
 
-            // Interface
             document.getElementById('btn-pagar').style.display = 'none';
             document.getElementById('loading').style.display = 'block';
+            document.getElementById('msgErro').style.display = 'none';
 
             try {
-                // CHAMA O SEU BACKEND PYTHON
+                // ENVIA TUDO PARA O PYTHON
                 const response = await fetch('/processar_pagamento', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email: user.email,
                         valor: total,
-                        descricao: `Festa 0800 - ${qtd}x Ingressos`
+                        descricao: `Festa 0800 - ${qtd}x Ingressos`,
+                        nome: nome,          // NOVO
+                        sobrenome: sobrenome,// NOVO
+                        cpf: cpf             // NOVO
                     })
                 });
 
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.erro || `Erro HTTP: ${response.status}`);
+                }
+
                 const data = await response.json();
 
-                if (data.qr_code_base64) {
-                    // SUCESSO! Mostra o QR Code
+                if (data.qr_code) {
                     mostrarAreaPix(data, qtd, total, user);
                 } else {
-                    alert("Erro ao gerar PIX. Tente novamente.");
-                    location.reload();
+                    throw new Error("Resposta inválida do servidor");
                 }
 
             } catch (error) {
-                console.error("Erro de conexão:", error);
-                alert("Erro ao conectar com servidor.");
-                location.reload();
+                console.error("Erro:", error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('btn-pagar').style.display = 'block';
+                document.getElementById('msgErro').style.display = 'block';
+                document.getElementById('msgErro').innerText = "Erro: " + error.message;
             }
         }
 
         function mostrarAreaPix(dataMP, qtd, total, user) {
-            // Esconde resumo, mostra PIX
             document.getElementById('card-resumo').style.display = 'none';
             document.getElementById('card-pix').style.display = 'block';
-
-            // Preenche imagem e código
-            document.getElementById('img-qrcode').src = "data:image/png;base64," + dataMP.qr_code_base64;
             document.getElementById('cola-pix').value = dataMP.qr_code;
 
-            // Salva dados na memória para quando o usuário clicar em "Já paguei"
             dadosCompra = {
                 uid_usuario: user.uid,
                 email_usuario: user.email,
                 evento: "Festa 0800",
                 quantidade: qtd,
                 valor: total,
-                id_pagamento_mp: dataMP.id_pagamento, // Salva o ID do Mercado Pago
-                status: "pendente", // Começa pendente
+                id_pagamento_mp: dataMP.id_pagamento, 
+                status: "pendente", 
                 data: new Date()
             };
         }
 
-        // 2. Função final que salva no Firebase e libera o ingresso
         function confirmarPagamento() {
-            // Em um app real, aqui você perguntaria ao Python: "O pagamento foi confirmado?"
-            // Como é um MVP, vamos confiar no usuário por enquanto e salvar como "aprovado"
-            
-            dadosCompra.status = "aprovado"; // Simulando aprovação imediata
-
+            dadosCompra.status = "aprovado"; 
             db.collection("compras").add(dadosCompra)
             .then(() => {
                 window.location.href = "/comprasucesso";
             })
             .catch((error) => {
                 console.error("Erro ao salvar:", error);
-                alert("Erro ao salvar ingresso. Contate o suporte.");
+                alert("Erro ao salvar ingresso no sistema.");
             });
         }
 
@@ -186,7 +207,10 @@
             const copyText = document.getElementById("cola-pix");
             copyText.select();
             document.execCommand("copy");
-            alert("Código PIX copiado!");
+            const btn = document.querySelector("button[onclick='copiarPix()']");
+            const textoOriginal = btn.innerHTML;
+            btn.innerHTML = "<i class='fas fa-check'></i> COPIADO!";
+            setTimeout(() => { btn.innerHTML = textoOriginal; }, 2000);
         }
     </script>
 </body>
