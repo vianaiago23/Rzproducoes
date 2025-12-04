@@ -150,8 +150,17 @@ header nav a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;  /* Faz o vídeo cobrir a área sem distorcer (essencial) */
-    z-index: 1;         /* Fica na camada mais baixa */
+    object-fit: cover; /* ou cover, conforme sua preferência anterior */
+    z-index: 1;
+}
+
+.video-desktop {
+    display: block;
+}
+
+/* O vídeo de mobile fica escondido */
+.video-mobile {
+    display: none;
 }
 
 /* Camada Escura (Overlay) */
@@ -208,6 +217,15 @@ header nav a:hover {
 
 /* MOBILE */
 @media (max-width: 768px) {
+    .video-desktop {
+        display: none;
+    }
+
+    /* Mostra o vídeo vertical */
+    .video-mobile {
+        display: block;
+        object-fit: cover; 
+    }
     .hero {
         height: 75vh;
     }
