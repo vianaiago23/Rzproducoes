@@ -11,7 +11,8 @@
 body {
     background-color: #000000;
     color: #fff;
-    padding-top: 70px;
+    /* ALTERAÇÃO SOLUÇÃO 1: Aumentado para 90px para dar respiro abaixo do header fixo */
+    padding-top: 90px; 
 }
 
 img {
@@ -36,36 +37,31 @@ img {
     object-fit: contain;
     display: block;
 }
+
 /* 1. HEADER GERAL */
 header {
     width: 100%;
     background: #000000;
     
-    /* CORREÇÃO 1: Mantém fixo no topo da tela */
+    /* Mantém fixo no topo da tela */
     position: fixed; 
     top: 0;
     left: 0;
     z-index: 999;
     
-    /* CORREÇÃO 2: Padding fixo (px) em vez de %. 
-       Isso traz a logo para mais perto do canto */
+    /* Padding fixo */
     padding: 15px 40px; 
 
     display: flex;
     align-items: center;
-    /* Isso garante que logo fique na esquerda e botões na direita */
     justify-content: space-between; 
 }
 
 /* 2. LOGO */
 .logo {
-    /* CORREÇÃO 3: Garante que a logo fique na esquerda
-       mesmo se for o único item na tela (caso do Login) */
     margin-right: auto; 
-    
-    /* Previne que a logo amasse */
     flex-shrink: 0;
-    z-index: 1000; /* Garante que fique acima do menu se a tela for muito pequena */
+    z-index: 1000; 
 }
 
 .logo a {
@@ -73,7 +69,7 @@ header {
     font-weight: 700;
     color: #fff;
     text-decoration: none;
-    display: flex; /* Remove espaços extras de links com imagens */
+    display: flex; 
 }
 
 .logo img {
@@ -85,13 +81,9 @@ header {
 
 /* 3. MENU (NAVEGAÇÃO COM CENTRALIZAÇÃO ABSOLUTA) */
 header nav {
-    /* CORREÇÃO 4: Centralização matemática absoluta.
-       Ele ignora a logo e se baseia no centro da tela */
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    
-    /* Removemos flex-grow para ele não empurrar nada */
     width: auto;
     text-align: center;
 }
@@ -114,8 +106,6 @@ header nav a:hover {
     display: flex;
     gap: 15px;
     align-items: center;
-    
-    /* Garante que fique na direita */
     margin-left: auto; 
     z-index: 1000;
 }
@@ -129,7 +119,7 @@ header nav a:hover {
     font-size: 14px;
     cursor: pointer;
     font-weight: 600;
-    color: #111; /* Garante que o texto fique escuro no fundo amarelo */
+    color: #111; 
 }
 
 .btn-acesso:hover {
@@ -151,7 +141,6 @@ header nav a:hover {
     padding: 0 20px;
 }
 
-/* Escurece a imagem para o texto ficar visível */
 .hero-overlay {
     position: absolute;
     top: 0;
@@ -161,7 +150,6 @@ header nav a:hover {
     background: rgba(0, 0, 0, 0.45);
 }
 
-/* Conteúdo sempre centralizado e acima do overlay */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -170,7 +158,6 @@ header nav a:hover {
     align-items: center;
 }
 
-/* Título */
 .hero-content h1 {
     font-size: 58px;
     font-weight: 700;
@@ -179,14 +166,12 @@ header nav a:hover {
     margin-bottom: 20px;
 }
 
-/* Subtítulo */
 .hero-content p {
     font-size: 22px;
     color: #eee;
     margin-bottom: 40px;
 }
 
-/* Botão ajustado */
 .btn-compre-agora {
     padding: 16px 40px;
     background-color: var(--cor-primaria);
@@ -287,202 +272,191 @@ header nav a:hover {
     background-color: #d00055;
 }
 
-        /* Estilos base (cores sugeridas pela interação anterior) */
-        :root {
-            --roxo: #eb0908;
-            --verde-neon: #eb0908;
-            --fundo-escuro: #1A1A1A;
-            --card-fundo: #252525;
-            --texto-claro: #F5F5F5;
-        }
+/* Estilos base (cores sugeridas pela interação anterior) */
+:root {
+    --roxo: #eb0908;
+    --verde-neon: #eb0908;
+    --fundo-escuro: #1A1A1A;
+    --card-fundo: #252525;
+    --texto-claro: #F5F5F5;
+}
 
-        /* -------------------------------------- */
-        /* Estilos do Line Up (EXISTENTE) */
-        /* -------------------------------------- */
-        .lineup-title {
-            color: var(--verde-neon);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 40px 0 20px 0;
-            text-align: center;
-            width: 100%; /* Garante que o título centralize */
-        }
+/* -------------------------------------- */
+/* Estilos do Line Up */
+/* -------------------------------------- */
+.lineup-title {
+    color: var(--verde-neon);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 40px 0 20px 0;
+    text-align: center;
+    width: 100%; 
+}
 
-        .lineup-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 15px;
-            margin-top: 20px;
-            width: 100%;
-            /* Quebra de linha para mobile */
-            flex-wrap: wrap; 
-        }
+.lineup-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+    flex-wrap: wrap; 
+}
 
-        .dj-card {
-            background-color: var(--card-fundo);
-            border-radius: 12px;
-            padding: 15px 10px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s;
-            flex: 1 1 30%; /* Responsividade: 3 cartões por linha, mas encolhem */
-            min-width: 120px; /* Garante que não fiquem muito pequenos */
-        }
-        
-        @media (max-width: 600px) {
-            .dj-card {
-                flex: 1 1 100%; /* Em telas pequenas, ocupa a largura total */
-                max-width: none;
-            }
-            .lineup-container {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-        
-        .dj-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
-        }
+.dj-card {
+    background-color: var(--card-fundo);
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+    flex: 1 1 30%; 
+    min-width: 120px; 
+}
 
-        .dj-photo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--roxo);
-            margin-bottom: 10px;
-        }
+@media (max-width: 600px) {
+    .dj-card {
+        flex: 1 1 100%; 
+        max-width: none;
+    }
+    .lineup-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
 
-        .dj-card h3 {
-            font-size: 1em;
-            color: var(--texto-claro);
-            margin: 5px 0 2px 0;
-        }
+.dj-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+}
 
-        .dj-style {
-            font-size: 0.8em;
-            color: #aaa;
-            font-weight: 300;
-        }
-        
-        /* -------------------------------------- */
-        /* Estilos das Bebidas (ATUALIZADO PARA SER MENOR) */
-        /* -------------------------------------- */
-        .drinks-title {
-            color: var(--roxo);
-            font-size: 1.1rem; /* Reduzido para ficar em escala com os cards menores */
-            font-weight: 600;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
+.dj-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--roxo);
+    margin-bottom: 10px;
+}
 
-        .drinks-container {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto; /* Permite scroll horizontal se tiver muitos cards */
-            padding-bottom: 10px; /* Espaço para a barra de rolagem */
-            margin-bottom: 20px;
-            
-            /* Estilo para a barra de rolagem no WebKit */
-            scrollbar-width: thin;
-            scrollbar-color: var(--roxo) var(--card-fundo);
-        }
+.dj-card h3 {
+    font-size: 1em;
+    color: var(--texto-claro);
+    margin: 5px 0 2px 0;
+}
 
-        .drinks-container::-webkit-scrollbar {
-            height: 6px;
-        }
+.dj-style {
+    font-size: 0.8em;
+    color: #aaa;
+    font-weight: 300;
+}
 
-        .drinks-container::-webkit-scrollbar-thumb {
-            background-color: var(--roxo);
-            border-radius: 10px;
-        }
+/* -------------------------------------- */
+/* Estilos das Bebidas */
+/* -------------------------------------- */
+.drinks-title {
+    color: var(--roxo);
+    font-size: 1.1rem; 
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
 
-        .drink-card {
-            flex: 0 0 auto; /* Não cresce e não encolhe, mantém o tamanho fixo */
-            width: 70px; 
-            text-align: center;
-            padding: 8px;
-            border-radius: 8px;
-            background-color: #333;
-            transition: background-color 0.2s;
-        }
+.drinks-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto; 
+    padding-bottom: 10px; 
+    margin-bottom: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--roxo) var(--card-fundo);
+}
 
-        .drink-card:hover {
-            background-color: #444;
-        }
+.drinks-container::-webkit-scrollbar {
+    height: 6px;
+}
 
-        .drink-photo {
-            width: 50px; 
-            height: 50px; 
-            object-fit: contain; /* Mantém a bebida visível */
-            margin-bottom: 5px;
-        }
+.drinks-container::-webkit-scrollbar-thumb {
+    background-color: var(--roxo);
+    border-radius: 10px;
+}
 
-        .drink-card p {
-            font-size: 0.7em; 
-            font-weight: 400;
-            color: var(--texto-claro);
-            margin: 0;
-            line-height: 1.2;
-        }
-        
-        /* -------------------------------------- */
-        /* Estilos Core (EXISTENTE) */
-        /* -------------------------------------- */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--fundo-escuro);
-            color: var(--texto-claro);
-            margin: 0;
-            padding: 0;
-        }
-        header { 
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center; 
-            padding: 15px 5%; 
-            background-color: #000; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5); 
-        }
-        .logo img { height: 40px; }
-        .secao-eventos { padding: 60px 5% 40px 5%; }
-        .evento-detalhe { 
-            display: flex; 
-            gap: 40px; 
-            background-color: var(--card-fundo); 
-            padding: 30px; 
-            border-radius: 15px; 
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap; /* Permite quebrar linha em mobile */
-        }
-        .banner-evento { 
-            width: 40%; 
-            min-width: 300px;
-            height: auto; 
-            border-radius: 12px; 
-            object-fit: cover; 
-            flex-shrink: 0; 
-        }
-        .info-evento { 
-            flex-grow: 1; 
-            min-width: 300px;
-        }
-        .titulo-evento { color: var(--roxo); margin-top: 0; }
-        /* ALTERADO: Aumento do padding para ampliar o botão de compra */
-        .btn-compre-agora {
-            background-color: var(--verde-neon);
-            color: var(--fundo-escuro);
-            padding: 16px 35px; /* Aumentado de 12px 25px para 16px 35px */
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 0; 
-            transition: background-color 0.3s;
-        }
-        .btn-compre-agora:hover { background-color: #00e6a8; }
+.drink-card {
+    flex: 0 0 auto; 
+    width: 70px; 
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #333;
+    transition: background-color 0.2s;
+}
+
+.drink-card:hover {
+    background-color: #444;
+}
+
+.drink-photo {
+    width: 50px; 
+    height: 50px; 
+    object-fit: contain; 
+    margin-bottom: 5px;
+}
+
+.drink-card p {
+    font-size: 0.7em; 
+    font-weight: 400;
+    color: var(--texto-claro);
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* -------------------------------------- */
+/* Estilos Core */
+/* -------------------------------------- */
+header { 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    padding: 15px 5%; 
+    background-color: #000; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+}
+.logo img { height: 40px; }
+.secao-eventos { padding: 60px 5% 40px 5%; }
+.evento-detalhe { 
+    display: flex; 
+    gap: 40px; 
+    background-color: var(--card-fundo); 
+    padding: 30px; 
+    border-radius: 15px; 
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap; 
+}
+.banner-evento { 
+    width: 40%; 
+    min-width: 300px;
+    height: auto; 
+    border-radius: 12px; 
+    object-fit: cover; 
+    flex-shrink: 0; 
+}
+.info-evento { 
+    flex-grow: 1; 
+    min-width: 300px;
+}
+.titulo-evento { color: var(--roxo); margin-top: 0; }
+.btn-compre-agora {
+    background-color: var(--verde-neon);
+    color: var(--fundo-escuro);
+    padding: 16px 35px; 
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0; 
+    transition: background-color 0.3s;
+}
+.btn-compre-agora:hover { background-color: #00e6a8; }
 
 /* -------------------- */
 /* CONTATO */
@@ -515,6 +489,7 @@ header nav a:hover {
 
 .form-contato input,
 .form-contato textarea {
+    resize: none;
     width: 100%;
     padding: 10px;
     margin-top: 6px;
@@ -537,6 +512,24 @@ header nav a:hover {
 
 .btn-enviar:hover {
     opacity: 0.8;
+}
+
+.contato-info a {
+    color: var(--cor-texto-claro); /* ou #fff */
+    text-decoration: none; /* Remove o sublinhado se quiser */
+    font-weight: 500;
+    transition: 0.3s;
+    margin: 5px 0;  /* Espaçamento entre eles */
+}
+
+/* Garante que não fiquem roxos mesmo depois de clicados */
+.contato-info a:visited {
+    color: var(--cor-texto-claro);
+}
+
+/* Muda de cor quando passa o mouse (efeito visual) */
+.contato-info a:hover {
+    color: var(--cor-secundaria); /* Fica verde neon/amarelo no hover */
 }
 
 /* -------------------- */
@@ -604,7 +597,6 @@ header nav a:hover {
 
 footer {
     background-color: #000;
-    padding: 40px 20px;
     border-top: 1px solid #222;
 }
 
@@ -700,7 +692,8 @@ body {
     background-color: var(--cor-fundo-escuro);
     color: var(--cor-texto-claro);
     min-height: 100vh;
-    padding-top: 70px;
+    /* ALTERAÇÃO SOLUÇÃO 1: Aumentado para 90px também aqui */
+    padding-top: 90px;
 }
 
 /* --- LAYOUT GERAL --- */
@@ -734,27 +727,26 @@ body {
     border-radius: 8px;
     padding: 20px 0;
     height: fit-content;
-    transition: box-shadow 0.3s ease; /* Adicionando transição de sombra */
+    transition: box-shadow 0.3s ease; 
 }
 
-/* Otimização: Adicionando efeito visual no foco/hover do menu */
 .menu-lateral:hover {
-    box-shadow: 0 0 15px rgba(139, 0, 255, 0.3); /* Sombra suave da cor primária */
+    box-shadow: 0 0 15px rgba(139, 0, 255, 0.3); 
 }
 
 .menu-lateral a {
-    display: flex; /* Usar flex para alinhar o ícone e o texto */
+    display: flex; 
     align-items: center;
     padding: 15px 25px;
     color: var(--cor-texto-claro);
     text-decoration: none;
     border-left: 3px solid transparent;
-    transition: all 0.3s ease-in-out; /* Transição mais suave para hover */
+    transition: all 0.3s ease-in-out; 
     font-weight: 500;
 }
 
 .menu-lateral a i {
-    margin-right: 15px; /* Aumentei a margem para separar mais o ícone */
+    margin-right: 15px; 
     width: 20px;
     text-align: center;
 }
@@ -806,15 +798,13 @@ body {
 }
 
 .ingresso-card:hover {
-    transform: translateY(-3px); /* Efeito de elevação sutil no hover */
+    transform: translateY(-3px); 
 }
 
 .ingresso-info {
     padding: 20px;
     flex: 1;
 }
-
-/* ... (restante do código de ingressos é ótimo, sem alterações) ... */
 
 /* --- DADOS PESSOAIS --- */
 .dados-linha {
@@ -849,41 +839,40 @@ body {
 
 .btn-logout:hover {
     opacity: 0.9;
-    background-color: #d13059; /* Escurece um pouco o botão no hover */
+    background-color: #d13059; 
 }
 
 /* --- RESPONSIVIDADE --- */
 @media (max-width: 850px) {
     .conta-main {
         flex-direction: column;
-        gap: 20px; /* Reduzi o gap em telas pequenas */
+        gap: 20px; 
     }
     .menu-lateral {
         flex: 1 1 auto;
-        padding: 0; /* Removendo padding vertical para o menu virar barra */
+        padding: 0; 
         border-radius: 0;
         
-        /* OTIMIZAÇÃO: Transforma o menu em uma barra horizontal rolavel */
         display: flex;
-        overflow-x: auto; /* Permite rolagem horizontal */
-        white-space: nowrap; /* Impede que os links quebrem linha */
+        overflow-x: auto; 
+        white-space: nowrap; 
         border-radius: 8px;
     }
     
     .menu-lateral a {
         padding: 10px 15px;
-        flex-shrink: 0; /* Impede que os itens encolham */
-        border-left: none !important; /* Limpa o estilo de desktop */
-        border-right: 3px solid transparent; /* Nova linha de destaque */
+        flex-shrink: 0; 
+        border-left: none !important; 
+        border-right: 3px solid transparent; 
     }
 
     .menu-lateral a.active {
         background-color: var(--cor-fundo-escuro);
         border-left: none !important;
-        border-bottom: 3px solid var(--cor-secundaria); /* Mantenho o destaque inferior */
+        border-bottom: 3px solid var(--cor-secundaria); 
     }
     
     .menu-lateral a i {
-        display: none; /* Oculta ícones em telas muito pequenas para economizar espaço */
+        display: none; 
     }
 }
