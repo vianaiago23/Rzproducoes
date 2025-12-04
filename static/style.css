@@ -127,43 +127,61 @@ header nav a:hover {
 }
 
 /* -------------------- */
-/* HERO (index) */
+/* HERO (COM VÍDEO) */
 /* -------------------- */
+
 .hero {
-    position: relative;
-    height: 90vh;
+    position: relative; /* Importante para segurar os elementos absolutos */
+    height: 90vh;       /* Altura da seção */
     width: 100%;
-    background: url("IMG_156.jpeg") center center / cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    overflow: hidden;   /* Corta o que sobrar do vídeo */
     padding: 0 20px;
+    margin-top: -20px;
 }
 
+/* Configuração do Vídeo */
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Faz o vídeo cobrir a área sem distorcer (essencial) */
+    z-index: 1;         /* Fica na camada mais baixa */
+}
+
+/* Camada Escura (Overlay) */
 .hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.5); /* Preto com 50% de transparência */
+    z-index: 2; /* Fica acima do vídeo */
 }
 
+/* Conteúdo (Texto e Botão) */
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3; /* Fica acima de tudo (vídeo e overlay) */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* (Mantenha seus estilos de h1, p e botão abaixo...) */
 .hero-content h1 {
     font-size: 58px;
     font-weight: 700;
     color: #fff;
     line-height: 1.1;
     margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Sombra para melhorar leitura */
 }
 
 .hero-content p {
