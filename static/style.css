@@ -36,39 +36,63 @@ img {
     object-fit: contain;
     display: block;
 }
+/* 1. HEADER GERAL */
 header {
     width: 100%;
-    background: #000000; /* Cor de fundo escura */
-    padding: 15px 5%; /* Adicione padding horizontal para margem */
+    background: #000000;
     
-    position: fixed;
+    /* CORREÇÃO 1: Mantém fixo no topo da tela */
+    position: fixed; 
     top: 0;
     left: 0;
     z-index: 999;
     
-    /* Regras Flexbox para alinhamento L-C-D */
+    /* CORREÇÃO 2: Padding fixo (px) em vez de %. 
+       Isso traz a logo para mais perto do canto */
+    padding: 15px 40px; 
+
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Distribui o espaço entre os elementos principais */
+    /* Isso garante que logo fique na esquerda e botões na direita */
+    justify-content: space-between; 
 }
 
 /* 2. LOGO */
+.logo {
+    /* CORREÇÃO 3: Garante que a logo fique na esquerda
+       mesmo se for o único item na tela (caso do Login) */
+    margin-right: auto; 
+    
+    /* Previne que a logo amasse */
+    flex-shrink: 0;
+    z-index: 1000; /* Garante que fique acima do menu se a tela for muito pequena */
+}
+
 .logo a {
     font-size: 26px;
     font-weight: 700;
     color: #fff;
     text-decoration: none;
-    /* Adicionado para garantir que a logo não seja espremida */
-    flex-shrink: 0; 
+    display: flex; /* Remove espaços extras de links com imagens */
 }
 
-/* 3. MENU (NAVEGAÇÃO CENTRALIZADA) */
+.logo img {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* 3. MENU (NAVEGAÇÃO COM CENTRALIZAÇÃO ABSOLUTA) */
 header nav {
-    /* Remove o posicionamento absoluto */
-    position: relative; 
-    /* Permite que a navegação cresça e empurre os outros elementos */
-    flex-grow: 1; 
-    /* Centraliza o conteúdo dentro da NAV */
+    /* CORREÇÃO 4: Centralização matemática absoluta.
+       Ele ignora a logo e se baseia no centro da tela */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Removemos flex-grow para ele não empurrar nada */
+    width: auto;
     text-align: center;
 }
 
@@ -77,20 +101,23 @@ header nav a {
     font-size: 16px;
     text-decoration: none;
     font-weight: 500;
-    margin: 0 20px; /* Adiciona espaçamento entre os links */
+    margin: 0 20px;
+    transition: color 0.3s;
 }
 
 header nav a:hover {
     color: #ffcc00;
 }
 
-/* 4. ÁREA DE AÇÕES DO HEADER (Botão de Acesso Fica Aqui) */
-.acoes-header { /* Use .acoes-header ou crie um div com essa classe */
+/* 4. ÁREA DE AÇÕES (DIREITA) */
+.acoes-header {
     display: flex;
     gap: 15px;
     align-items: center;
-    /* Adicionado para garantir que as ações fiquem à direita */
-    flex-shrink: 0; 
+    
+    /* Garante que fique na direita */
+    margin-left: auto; 
+    z-index: 1000;
 }
 
 /* 5. BOTÃO ACESSO */
