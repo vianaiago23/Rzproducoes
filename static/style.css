@@ -11,6 +11,7 @@
 body {
     background-color: #000000;
     color: #fff;
+    padding-top: 70px;
 }
 
 img {
@@ -672,6 +673,7 @@ body {
     background-color: var(--cor-fundo-escuro);
     color: var(--cor-texto-claro);
     min-height: 100vh;
+    padding-top: 70px;
 }
 
 /* --- LAYOUT GERAL --- */
