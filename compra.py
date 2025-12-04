@@ -17,6 +17,10 @@ def homepage():
 def eventos():
     return render_template("eventos.html")
 
+@app.route("/contato")
+def contato():
+    return render_template("contato.html")
+
 @app.route("/checkout")
 def checkout():
     return render_template("checkout.html")
